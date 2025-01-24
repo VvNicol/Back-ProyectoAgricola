@@ -8,11 +8,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "usuarios", schema = "agrilog")
@@ -36,25 +36,27 @@ public class UsuarioModelo {
 	@Column(name = "correo", nullable = false, unique = true, length = 100)
 	private String correo;
 
-	@Column(name = "rol", nullable = false, length = 50)
+	@Column(name = "rol", columnDefinition = "VARCHAR(50) DEFAULT 'usuario'")
 	private String rol;
 
-	@NotBlank(message = "La contraseña no puede estar vacía")
-	@Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
-	@Column(name = "contrasenia", nullable = false)
+	@Column(name = "contrasenia")
 	private String contrasenia;
 
 	@Column(name = "token", length = 255)
 	private String token;
 
+	@Lob
 	@Column(name = "imagen")
-	private Byte imagen;
+	private byte[] imagen;
 
-	@Column(name = "fecha_registro", nullable = false)
+	@Column(name = "fecha_registro")
 	private LocalDateTime fechaRegistro;
 
-	@Column(name = "autenticacion_externa", nullable = false)
+	@Column(name = "autenticacion_externa", columnDefinition = "boolean default false")
 	private Boolean autenticacionExterna;
+
+	@Column(name = "correo_validado", columnDefinition = "boolean default false")
+	private boolean correoValidado;
 
 	@Column(name = "proveedor", length = 50)
 	private String proveedor;
@@ -177,14 +179,14 @@ public class UsuarioModelo {
 	/**
 	 * @return the imagen
 	 */
-	public Byte getImagen() {
+	public byte[] getImagen() {
 		return imagen;
 	}
 
 	/**
 	 * @param imagen the imagen to set
 	 */
-	public void setImagen(Byte imagen) {
+	public void setImagen(byte[] imagen) {
 		this.imagen = imagen;
 	}
 
@@ -217,6 +219,20 @@ public class UsuarioModelo {
 	}
 
 	/**
+	 * @return the correoValidado
+	 */
+	public boolean isCorreoValidado() {
+		return correoValidado;
+	}
+
+	/**
+	 * @param correoValidado the correoValidado to set
+	 */
+	public void setCorreoValidado(boolean correoValidado) {
+		this.correoValidado = correoValidado;
+	}
+
+	/**
 	 * @return the proveedor
 	 */
 	public String getProveedor() {
@@ -242,6 +258,20 @@ public class UsuarioModelo {
 	 */
 	public void setExternoId(String externoId) {
 		this.externoId = externoId;
+	}
+
+	/**
+	 * @return the parcelas
+	 */
+	public List<ParcelaModelo> getParcelas() {
+		return parcelas;
+	}
+
+	/**
+	 * @param parcelas the parcelas to set
+	 */
+	public void setParcelas(List<ParcelaModelo> parcelas) {
+		this.parcelas = parcelas;
 	}
 
 }
