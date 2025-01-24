@@ -37,7 +37,7 @@ public class UsuarioModelo {
 	private String correo;
 
 	@Column(name = "rol", columnDefinition = "VARCHAR(50) DEFAULT 'usuario'")
-	private String rol;
+	private String rol = "usuario";
 
 	@Column(name = "contrasenia")
 	private String contrasenia;
@@ -52,8 +52,8 @@ public class UsuarioModelo {
 	@Column(name = "fecha_registro")
 	private LocalDateTime fechaRegistro;
 
-	@Column(name = "autenticacion_externa", columnDefinition = "boolean default false")
-	private Boolean autenticacionExterna;
+	@Column(name = "autenticacion_externa", nullable = false, columnDefinition = "boolean default false")
+	private Boolean autenticacionExterna = false;
 
 	@Column(name = "correo_validado", columnDefinition = "boolean default false")
 	private boolean correoValidado;
