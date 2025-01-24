@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import agrilog.modelos.UsuarioModelo;
 import agrilog.repositorios.UsuarioRepositorio;
+import jakarta.mail.MessagingException;
 
 @Service
 public class UsuarioImplementacion implements UsuarioInterfaz {
@@ -15,6 +16,20 @@ public class UsuarioImplementacion implements UsuarioInterfaz {
 	
 	@Autowired
 	private PasswordEncoder ContraseniaEncriptada;
+	
+	@Autowired
+    private CorreoServicio emailService;
+
+    public void enviarCorreoDeVerificacion(String correo) {
+        String asunto = "Verificación de correo :p";
+        String contenido = "<h1>Bienvenido</h1><p>Hola bebito, mi primer correo enviado desde java </p>";
+        
+        try {
+            emailService.enviarCorreo(correo, asunto, contenido);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
 
 	@Override
 	public void registrarUsuario(UsuarioModelo usuario) throws Exception {
@@ -28,6 +43,8 @@ public class UsuarioImplementacion implements UsuarioInterfaz {
 		
 		usuario.setFechaRegistro(java.time.LocalDateTime.now());
 		usuarioRepositorio.save(usuario);
+		
+		enviarCorreoDeVerificacion(usuario.getCorreo());
 	}
 
 	@Override

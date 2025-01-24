@@ -56,13 +56,13 @@ public class UsuarioModelo {
 	private Boolean autenticacionExterna = false;
 
 	@Column(name = "correo_validado", columnDefinition = "boolean default false")
-	private boolean correoValidado;
+	private boolean correoValidado = false;
 
 	@Column(name = "proveedor", length = 50)
-	private String proveedor;
+	private String proveedor= "ninguno";
 
 	@Column(name = "externo_id", length = 100)
-	private String externoId;
+	private String externoId = "ninguno";
 
 	// Relación de uno a muchos con ParcelaModelo
 	@OneToMany(mappedBy = "usuarioId") // Relación de un usuario a muchas parcelas

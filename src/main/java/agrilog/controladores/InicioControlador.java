@@ -21,7 +21,7 @@ public class InicioControlador {
 	@PostMapping("/registro")
     public ResponseEntity<String> registrarUsuario(@RequestBody UsuarioModelo usuario) {
         try {
-            ui.registrarUsuario(usuario);
+            ui.registrarUsuario(usuario);                  
             
             return new ResponseEntity<>("Usuario registrado con éxito.", HttpStatus.CREATED);
         } catch (Exception e) {
