@@ -44,7 +44,13 @@ public class UsuarioModelo {
 
 	@Column(name = "token", length = 255)
 	private String token;
-
+	
+	@Column(name = "fecha_expiracion_token")
+	private LocalDateTime fechaExpiracionToken;
+	
+	@Column(name = "correo_validado", columnDefinition = "boolean default false")
+	private boolean correoValidado = false;
+	
 	@Lob
 	@Column(name = "imagen")
 	private byte[] imagen;
@@ -54,9 +60,6 @@ public class UsuarioModelo {
 
 	@Column(name = "autenticacion_externa", nullable = false, columnDefinition = "boolean default false")
 	private Boolean autenticacionExterna = false;
-
-	@Column(name = "correo_validado", columnDefinition = "boolean default false")
-	private boolean correoValidado = false;
 
 	@Column(name = "proveedor", length = 50)
 	private String proveedor= "ninguno";
@@ -174,6 +177,20 @@ public class UsuarioModelo {
 	 */
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	/**
+	 * @return the fechaExpiracionToken
+	 */
+	public LocalDateTime getFechaExpiracionToken() {
+		return fechaExpiracionToken;
+	}
+
+	/**
+	 * @param fechaExpiracionToken the fechaExpiracionToken to set
+	 */
+	public void setFechaExpiracionToken(LocalDateTime fechaExpiracionToken) {
+		this.fechaExpiracionToken = fechaExpiracionToken;
 	}
 
 	/**

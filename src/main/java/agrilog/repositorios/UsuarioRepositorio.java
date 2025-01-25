@@ -7,5 +7,7 @@ import agrilog.modelos.UsuarioModelo;
 @Repository
 public interface UsuarioRepositorio extends JpaRepository<UsuarioModelo, Long> {
 
-    boolean existsByCorreo(String correo); 
+    boolean existsByCorreo(String correo);
+
+	UsuarioModelo findByToken(String token); 
 }

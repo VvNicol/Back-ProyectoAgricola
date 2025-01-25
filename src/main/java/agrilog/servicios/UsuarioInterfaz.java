@@ -10,4 +10,6 @@ public interface UsuarioInterfaz {
 	
 	public boolean verificarContrasenia(String contraseniaIngresada, String contraseniaGuardada);
 
+	boolean validarCorreo(String token);
+
 }

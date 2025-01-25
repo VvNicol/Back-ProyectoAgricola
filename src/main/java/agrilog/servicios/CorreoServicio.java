@@ -26,5 +26,7 @@ public class CorreoServicio {
 		
 		correoRemitente.send(mensaje);
 	}
+	
+	
 
 }
