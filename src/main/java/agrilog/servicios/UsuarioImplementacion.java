@@ -22,7 +22,7 @@ public class UsuarioImplementacion implements UsuarioInterfaz {
 
     public void enviarCorreoDeVerificacion(String correo) {
         String asunto = "Verificación de correo :p";
-        String contenido = "<h1>Bienvenido</h1><p>Hola bebito, mi primer correo enviado desde java </p>";
+        String contenido = "<h1>Probandooo </h1><p>:p</p>";
         
         try {
             emailService.enviarCorreo(correo, asunto, contenido);
@@ -44,7 +44,8 @@ public class UsuarioImplementacion implements UsuarioInterfaz {
 		usuario.setFechaRegistro(java.time.LocalDateTime.now());
 		usuarioRepositorio.save(usuario);
 		
-		enviarCorreoDeVerificacion(usuario.getCorreo());
+		enviarCorreoDeVerificacion(usuario.getCorreo());		
+
 	}
 
 	@Override
