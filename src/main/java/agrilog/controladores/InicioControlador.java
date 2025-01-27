@@ -40,13 +40,11 @@ public class InicioControlador {
 			boolean validacionExitosa = ui.validarCorreo(token);
 
 			if (validacionExitosa) {
-				System.out.println("Correo verificado con exito");
 				return new ResponseEntity<>("Correo verificado con exito", HttpStatus.OK);
-				
+
 			} else {
-				System.out.println("El token es invalido o ha caducado");
 				return new ResponseEntity<>("El token es invalido o ha caducado", HttpStatus.BAD_REQUEST);
-				
+
 			}
 
 		} catch (Exception e) {
