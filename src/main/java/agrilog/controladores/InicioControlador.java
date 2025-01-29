@@ -28,6 +28,7 @@ public class InicioControlador {
 			ui.registrarUsuario(usuario);
 
 			return new ResponseEntity<>("Usuario registrado con éxito.", HttpStatus.CREATED);
+			
 		} catch (Exception e) {
 			// Si hay un error (por ejemplo, correo ya registrado), devolvemos el mensaje y
 			// código 400 (Bad Request)

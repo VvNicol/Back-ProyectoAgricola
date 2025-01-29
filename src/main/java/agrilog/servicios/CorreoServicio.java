@@ -28,10 +28,12 @@ public class CorreoServicio implements CorreoInterfaz{
 	}
 	
 	public void enviarCorreoDeVerificacion(String correo, String token) {
+			
+		
 	    String asunto = "Verificación de correo :p";
 	    String contenido = "<h1>Verifica tu correo electrónico</h1>" +
 	            "<p>Haz clic en el siguiente botón para verificar tu cuenta:</p>" +
-	            "<a href=\"http://localhost:5136/inicio/verificar?token=" + token + "\" " +
+	            "<a href=\"http://localhost:4200/registrarse/verificar-correo?token=" + token + "\" " +
 	            "style=\"padding: 10px 20px; color: white; background-color: #007bff; text-decoration: none; border-radius: 5px;\">Verificar correo</a>" +
 	            "<p>Si no reconoces esta acción, ignora este mensaje.</p>";
 
