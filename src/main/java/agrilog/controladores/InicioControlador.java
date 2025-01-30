@@ -82,6 +82,8 @@ public class InicioControlador {
 				response.put("token", token);
 				response.put("url", urlRedireccion);
 				response.put("rol", rol);
+				
+				System.out.println("Datos recibidos: " + usuario.getCorreo());
 
 				return new ResponseEntity<>(response, HttpStatus.OK);
 			}
