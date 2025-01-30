@@ -12,4 +12,6 @@ public interface UsuarioInterfaz {
 
 	boolean validarCorreo(String token);
 
+	boolean iniciarSesion(String correo, String contrasenia) throws Exception;
+
 }
