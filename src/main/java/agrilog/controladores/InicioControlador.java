@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import agrilog.modelos.UsuarioModelo;
+import agrilog.repositorios.UsuarioRepositorio;
 import agrilog.servicios.UsuarioInterfaz;
 import agrilog.utilidades.JwtUtil;
 
@@ -25,6 +26,9 @@ public class InicioControlador {
 
 	@Autowired
 	private UsuarioInterfaz ui;
+	
+	@Autowired
+	private UsuarioRepositorio usuarioRepositorio;
 
 	@GetMapping("/verificar")
 	public ResponseEntity<String> validarCorreo(@RequestParam("token") String token) {
@@ -69,22 +73,24 @@ public class InicioControlador {
 			boolean sesionIniciada = ui.iniciarSesion(usuario.getCorreo(), usuario.getContrasenia());
 
 			if (sesionIniciada) {
+				
+	            UsuarioModelo usuarioBD = usuarioRepositorio.findByCorreo(usuario.getCorreo());
 
-				String rol = usuario.getRol();
+
+				String rol = usuarioBD.getRol();
 				String token = JwtUtil.generarToken(usuario.getCorreo(), rol);
+				 
+				System.out.print(usuarioBD);
 
-				// Definir URL de redirección
-				String urlRedireccion = rol.equals("usuario") ? "http://localhost:4200/inicio/usuario?token=" + token
-						: "http://localhost:4200/inicio/admin?token=" + token;
-
+	            String urlRedireccion = "http://localhost:4200/inicio/" + rol + "?token=" + token;
+			          
 				// respuesta JSON
 				response.put("mensaje", "Inicio de sesión exitoso.");
 				response.put("token", token);
 				response.put("url", urlRedireccion);
 				response.put("rol", rol);
+				System.out.print("rol"+ rol);
 				
-				System.out.println("Datos recibidos: " + usuario.getCorreo());
-
 				return new ResponseEntity<>(response, HttpStatus.OK);
 			}
 

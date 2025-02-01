@@ -36,8 +36,8 @@ public class UsuarioModelo {
 	@Column(name = "correo", nullable = false, unique = true, length = 100)
 	private String correo;
 
-	@Column(name = "rol", columnDefinition = "VARCHAR(50) DEFAULT 'usuario'")
-	private String rol = "usuario";
+	@Column(name = "rol")
+	private String rol;
 
 	@Column(name = "contrasenia")
 	private String contrasenia;

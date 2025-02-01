@@ -28,10 +28,14 @@ public class UsuarioServicio implements UsuarioInterfaz {
 		if (usuarioRepositorio.existsByCorreo(usuario.getCorreo())) {
 			throw new Exception("El correo ya está registrado.");
 		}
-
+		
+		String asignacionRol = "usuario";
+		usuario.setRol(asignacionRol);
+		
 		String encriptarContrasenia = this.ContraseniaEncriptada.encode(usuario.getContrasenia());
 		usuario.setContrasenia(encriptarContrasenia);
 		usuario.setFechaRegistro(java.time.LocalDateTime.now());
+		
 
 		String token = Util.generarTokenConCorreo(usuario);
 		usuarioRepositorio.save(usuario);
@@ -73,8 +77,6 @@ public class UsuarioServicio implements UsuarioInterfaz {
 	public boolean iniciarSesion(String correo, String contrasenia) throws Exception {
 
 		UsuarioModelo usuario = usuarioRepositorio.findByCorreo(correo);
-		/*String mensaje = "";*/
-		
 		
 		if (usuario == null) {
 			throw new Exception("El correo no esta registrado");
