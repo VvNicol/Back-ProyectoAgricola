@@ -3,6 +3,8 @@ package agrilog.servicios;
 import agrilog.modelos.UsuarioModelo;
 
 public interface UsuarioInterfaz {
+	
+	public void solicitarRecuperacion(String correo) throws Exception;
 
 	void registrarUsuario(UsuarioModelo usuario) throws Exception;
 

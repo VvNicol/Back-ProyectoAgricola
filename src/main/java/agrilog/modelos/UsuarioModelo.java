@@ -35,6 +35,12 @@ public class UsuarioModelo {
 	@NotBlank(message = "El correo no puede estar vacío")
 	@Column(name = "correo", nullable = false, unique = true, length = 100)
 	private String correo;
+	
+	@Column (name = "codigo_recuperacion")
+	private int codigoRecuperacion;
+	
+	@Column(name = "codigo_fecha_expiracion")
+	private LocalDateTime codigoExpiracionFecha;
 
 	@Column(name = "rol")
 	private String rol;
@@ -45,8 +51,8 @@ public class UsuarioModelo {
 	@Column(name = "token", length = 255)
 	private String token;
 	
-	@Column(name = "fecha_expiracion_token")
-	private LocalDateTime fechaExpiracionToken;
+	@Column(name = "token_expiracion_fecha")
+	private LocalDateTime tokenExpiracionFecha;
 	
 	@Column(name = "correo_validado", columnDefinition = "boolean default false")
 	private boolean correoValidado = false;
@@ -152,6 +158,36 @@ public class UsuarioModelo {
 	}
 
 	/**
+	 * @return the codigoRecuperacion
+	 */
+	public int getCodigoRecuperacion() {
+		return codigoRecuperacion;
+	}
+
+	/**
+	 * @param codigoRecuperacion the codigoRecuperacion to set
+	 */
+	public void setCodigoRecuperacion(int codigoRecuperacion) {
+		this.codigoRecuperacion = codigoRecuperacion;
+	}
+
+
+
+	/**
+	 * @return the codigoExpiracionFecha
+	 */
+	public LocalDateTime getCodigoExpiracionFecha() {
+		return codigoExpiracionFecha;
+	}
+
+	/**
+	 * @param codigoExpiracionFecha the codigoExpiracionFecha to set
+	 */
+	public void setCodigoExpiracionFecha(LocalDateTime codigoExpiracionFecha) {
+		this.codigoExpiracionFecha = codigoExpiracionFecha;
+	}
+
+	/**
 	 * @return the contrasenia
 	 */
 	public String getContrasenia() {
@@ -179,18 +215,21 @@ public class UsuarioModelo {
 		this.token = token;
 	}
 
+
+
+
 	/**
-	 * @return the fechaExpiracionToken
+	 * @return the tokenExpiracionFecha
 	 */
-	public LocalDateTime getFechaExpiracionToken() {
-		return fechaExpiracionToken;
+	public LocalDateTime getTokenExpiracionFecha() {
+		return tokenExpiracionFecha;
 	}
 
 	/**
-	 * @param fechaExpiracionToken the fechaExpiracionToken to set
+	 * @param tokenExpiracionFecha the tokenExpiracionFecha to set
 	 */
-	public void setFechaExpiracionToken(LocalDateTime fechaExpiracionToken) {
-		this.fechaExpiracionToken = fechaExpiracionToken;
+	public void setTokenExpiracionFecha(LocalDateTime tokenExpiracionFecha) {
+		this.tokenExpiracionFecha = tokenExpiracionFecha;
 	}
 
 	/**

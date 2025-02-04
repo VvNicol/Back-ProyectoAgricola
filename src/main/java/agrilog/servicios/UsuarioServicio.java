@@ -24,23 +24,41 @@ public class UsuarioServicio implements UsuarioInterfaz {
 	private CorreoServicio correoServicio;
 
 	@Override
+	public void solicitarRecuperacion(String correo) throws Exception {
+
+		UsuarioModelo usuario = usuarioRepositorio.findByCorreo(correo);
+
+		if (usuario != null) {
+
+			int codigo = Util.generarCodigo();
+			usuario.setCodigoRecuperacion(codigo);
+			usuario.setCodigoExpiracionFecha(LocalDateTime.now().plusMinutes(10));
+			correoServicio.correoRecuperacionConCodigo(usuario.getCorreo(), codigo);
+			usuarioRepositorio.save(usuario);
+			
+		} else {
+			throw new Exception("Usuario no encontrado");
+		}
+	}
+
+	@Override
 	public void registrarUsuario(UsuarioModelo usuario) throws Exception {
+
 		if (usuarioRepositorio.existsByCorreo(usuario.getCorreo())) {
 			throw new Exception("El correo ya está registrado.");
 		}
-		
+
 		String asignacionRol = "usuario";
 		usuario.setRol(asignacionRol);
-		
+
 		String encriptarContrasenia = this.ContraseniaEncriptada.encode(usuario.getContrasenia());
 		usuario.setContrasenia(encriptarContrasenia);
 		usuario.setFechaRegistro(java.time.LocalDateTime.now());
-		
 
 		String token = Util.generarTokenConCorreo(usuario);
 		usuarioRepositorio.save(usuario);
 
-		correoServicio.enviarCorreoDeVerificacion(usuario.getCorreo(), token);
+		correoServicio.correoDeVerificacion(usuario.getCorreo(), token);
 	}
 
 	@Override
@@ -53,7 +71,7 @@ public class UsuarioServicio implements UsuarioInterfaz {
 		}
 
 		// Verifica si el token sigue siendo válido
-		if (usuario.getFechaExpiracionToken().isAfter(LocalDateTime.now())) {
+		if (usuario.getTokenExpiracionFecha().isAfter(LocalDateTime.now())) {
 			usuario.setCorreoValidado(true);
 			usuario.setToken(null);
 			usuarioRepositorio.save(usuario);
@@ -77,7 +95,7 @@ public class UsuarioServicio implements UsuarioInterfaz {
 	public boolean iniciarSesion(String correo, String contrasenia) throws Exception {
 
 		UsuarioModelo usuario = usuarioRepositorio.findByCorreo(correo);
-		
+
 		if (usuario == null) {
 			throw new Exception("El correo no esta registrado");
 		}
@@ -86,9 +104,8 @@ public class UsuarioServicio implements UsuarioInterfaz {
 
 			String token = Util.generarTokenConCorreo(usuario);
 			usuarioRepositorio.save(usuario);
-			correoServicio.enviarCorreoDeVerificacion(usuario.getCorreo(), token);
-			
-			
+			correoServicio.correoDeVerificacion(usuario.getCorreo(), token);
+
 			throw new Exception("El correo no ha sido validado. Revisa tu bandeja de entrada.");
 
 		}

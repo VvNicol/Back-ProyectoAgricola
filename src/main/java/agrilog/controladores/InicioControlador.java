@@ -26,7 +26,7 @@ public class InicioControlador {
 
 	@Autowired
 	private UsuarioInterfaz ui;
-	
+
 	@Autowired
 	private UsuarioRepositorio usuarioRepositorio;
 
@@ -51,6 +51,25 @@ public class InicioControlador {
 		}
 	}
 
+	@PostMapping("/recuperar-contrasenia")
+	public ResponseEntity<Map<String, String>> recuperarContrasenia(@RequestParam("correo") String correo) {
+		Map<String, String> responde = new HashMap<>();
+
+		try {
+			ui.solicitarRecuperacion(correo);
+
+			responde.put("mensaje", "Se ha enviado un codigo de recuperacion al correo.");
+
+			return new ResponseEntity<>(responde, HttpStatus.OK);
+
+		} catch (Exception e) {
+			responde.put("mensaje", "Error al intentar recuperar la contraseña.");
+			responde.put("error", e.getMessage());
+			return new ResponseEntity<>(responde, HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
 	@PostMapping("/registro")
 	public ResponseEntity<String> registrarUsuario(@RequestBody UsuarioModelo usuario) {
 		try {
@@ -66,42 +85,41 @@ public class InicioControlador {
 
 	@PostMapping("/iniciar-sesion")
 	public ResponseEntity<Map<String, Object>> iniciarSesion(@RequestBody UsuarioModelo usuario) {
-		Map<String, Object> response = new HashMap<>();
+		Map<String, Object> responde = new HashMap<>();
 
 		try {
 
 			boolean sesionIniciada = ui.iniciarSesion(usuario.getCorreo(), usuario.getContrasenia());
 
 			if (sesionIniciada) {
-				
-	            UsuarioModelo usuarioBD = usuarioRepositorio.findByCorreo(usuario.getCorreo());
 
+				UsuarioModelo usuarioBD = usuarioRepositorio.findByCorreo(usuario.getCorreo());
 
 				String rol = usuarioBD.getRol();
 				String token = JwtUtil.generarToken(usuario.getCorreo(), rol);
-				 
+
 				System.out.print(usuarioBD);
 
-	            String urlRedireccion = "http://localhost:4200/inicio/" + rol + "?token=" + token;
-			          
+				String urlRedireccion = "http://localhost:4200/inicio/" + rol + "?token=" + token;
+
 				// respuesta JSON
-				response.put("mensaje", "Inicio de sesión exitoso.");
-				response.put("token", token);
-				response.put("url", urlRedireccion);
-				response.put("rol", rol);
-				System.out.print("rol"+ rol);
-				
-				return new ResponseEntity<>(response, HttpStatus.OK);
+				responde.put("mensaje", "Inicio de sesión exitoso.");
+				responde.put("token", token);
+				responde.put("url", urlRedireccion);
+				responde.put("rol", rol);
+				System.out.print("rol" + rol);
+
+				return new ResponseEntity<>(responde, HttpStatus.OK);
 			}
 
-			response.put("mensaje", "No se pudo iniciar sesión.");
-			return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+			responde.put("mensaje", "No se pudo iniciar sesión.");
+			return new ResponseEntity<>(responde, HttpStatus.UNAUTHORIZED);
 
 		} catch (Exception e) {
 			// Captura el mensaje de la excepción y lo devuelve en JSON
-			response.put("mensaje", "Error al iniciar sesión.");
-			response.put("error", e.getMessage());
-			return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+			responde.put("mensaje", "Error al iniciar sesión.");
+			responde.put("error", e.getMessage());
+			return new ResponseEntity<>(responde, HttpStatus.UNAUTHORIZED);
 		}
 	}
 

@@ -27,7 +27,7 @@ public class CorreoServicio implements CorreoInterfaz{
 		correoRemitente.send(mensaje);
 	}
 	
-	public void enviarCorreoDeVerificacion(String correo, String token) {
+	public void correoDeVerificacion(String correo, String token) {
 			
 		
 	    String asunto = "Verificación de correo :p";
@@ -42,6 +42,23 @@ public class CorreoServicio implements CorreoInterfaz{
 	    } catch (MessagingException e) {
 	        e.printStackTrace();
 	    }
+	   
+	}
+
+	public void correoRecuperacionConCodigo(String correo, int codigo) {
+		
+		String asunto = "Recuperacion de contraseña";
+		String contenido = "Hola, tu codigo de recuperacion es: "+codigo+"\n"+
+						"Este codigo expirara en 10 minutos";
+		
+		try {
+			
+			enviarCorreo(correo, asunto, contenido);
+			
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }
