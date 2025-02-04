@@ -16,4 +16,6 @@ public interface UsuarioInterfaz {
 
 	boolean iniciarSesion(String correo, String contrasenia) throws Exception;
 
+	public void cambiarContrasenia(String correo, int codigo, String nuevaContrasenia) throws Exception;
+
 }

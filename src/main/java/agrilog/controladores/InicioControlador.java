@@ -50,12 +50,38 @@ public class InicioControlador {
 
 		}
 	}
+	
+	@PostMapping("/cambiar-contrasenia")
+	public ResponseEntity<Map<String, String>> cambiarConstrasenia(@RequestBody Map<String, String> requestBody) {
+		
+		Map<String, String> responde = new HashMap<>();
+		
+		try {
+			String correo = requestBody.get("correo");
+			int codigo = Integer.parseInt(requestBody.get("codigo"));
+			String nuevaContrasenia = requestBody.get("nuevaContrasenia");
+			
+			ui.cambiarContrasenia(correo,codigo,nuevaContrasenia);
+			
+			responde.put("mensaje", "Contraseña cambiada con éxito.");
+			return new ResponseEntity<>(responde, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			
+			responde.put("mensaje", "Error al cambiar la contraseña.");
+			responde.put("error", e.getMessage());
+			return new ResponseEntity<>(responde, HttpStatus.BAD_REQUEST);
+		}
+		
+	}
 
 	@PostMapping("/recuperar-contrasenia")
-	public ResponseEntity<Map<String, String>> recuperarContrasenia(@RequestParam("correo") String correo) {
+	public ResponseEntity<Map<String, String>> recuperarContrasenia(@RequestBody Map<String, String> requestBody) {
 		Map<String, String> responde = new HashMap<>();
 
 		try {
+			
+			String correo = requestBody.get("correo");
 			ui.solicitarRecuperacion(correo);
 
 			responde.put("mensaje", "Se ha enviado un codigo de recuperacion al correo.");
