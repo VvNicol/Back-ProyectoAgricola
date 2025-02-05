@@ -51,17 +51,17 @@ public class InicioControlador {
 		}
 	}
 	
-	@PostMapping("/cambiar-contrasenia")
+	@PostMapping("/nueva-contrasenia")
 	public ResponseEntity<Map<String, String>> cambiarConstrasenia(@RequestBody Map<String, String> requestBody) {
 		
 		Map<String, String> responde = new HashMap<>();
 		
 		try {
 			String correo = requestBody.get("correo");
-			int codigo = Integer.parseInt(requestBody.get("codigo"));
+		
 			String nuevaContrasenia = requestBody.get("nuevaContrasenia");
 			
-			ui.cambiarContrasenia(correo,codigo,nuevaContrasenia);
+			ui.cambiarContrasenia(correo,nuevaContrasenia);
 			
 			responde.put("mensaje", "Contraseña cambiada con éxito.");
 			return new ResponseEntity<>(responde, HttpStatus.OK);
@@ -74,22 +74,45 @@ public class InicioControlador {
 		}
 		
 	}
+	
+	@PostMapping("/verificar-codigo")
+	public ResponseEntity<Map<String, String>> verificarCodigo(@RequestBody Map<String, String> requestBody) {
+		
+		Map<String, String> responde = new HashMap<>();
 
-	@PostMapping("/recuperar-contrasenia")
+		try {
+			
+			String correo = requestBody.get("correo");
+			int codigo = Integer.parseInt(requestBody.get("codigo"));
+			ui.verificarCodigo(correo, codigo);
+
+			responde.put("mensaje", "Se ha verificado con exito el codigo.");
+
+			return new ResponseEntity<>(responde, HttpStatus.OK);
+
+		} catch (Exception e) {
+			responde.put("mensaje", "Error al intentar verificar el codigo.");
+			responde.put("error", e.getMessage());
+			return new ResponseEntity<>(responde, HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
+	@PostMapping("/enviar-codigo")
 	public ResponseEntity<Map<String, String>> recuperarContrasenia(@RequestBody Map<String, String> requestBody) {
 		Map<String, String> responde = new HashMap<>();
 
 		try {
 			
 			String correo = requestBody.get("correo");
-			ui.solicitarRecuperacion(correo);
+			ui.enviarCodigoAlCorreo(correo);
 
 			responde.put("mensaje", "Se ha enviado un codigo de recuperacion al correo.");
 
 			return new ResponseEntity<>(responde, HttpStatus.OK);
 
 		} catch (Exception e) {
-			responde.put("mensaje", "Error al intentar recuperar la contraseña.");
+			responde.put("mensaje", "Error al intentar enviar el correo.");
 			responde.put("error", e.getMessage());
 			return new ResponseEntity<>(responde, HttpStatus.BAD_REQUEST);
 		}

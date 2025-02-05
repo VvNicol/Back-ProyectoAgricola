@@ -37,7 +37,7 @@ public class UsuarioModelo {
 	private String correo;
 	
 	@Column (name = "codigo_recuperacion")
-	private int codigoRecuperacion;
+	private int codigoRecuperacion = 0;
 	
 	@Column(name = "codigo_fecha_expiracion")
 	private LocalDateTime codigoExpiracionFecha;

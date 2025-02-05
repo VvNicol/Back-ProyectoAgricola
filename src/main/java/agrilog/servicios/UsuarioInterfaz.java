@@ -4,7 +4,7 @@ import agrilog.modelos.UsuarioModelo;
 
 public interface UsuarioInterfaz {
 	
-	public void solicitarRecuperacion(String correo) throws Exception;
+	public void enviarCodigoAlCorreo(String correo) throws Exception;
 
 	void registrarUsuario(UsuarioModelo usuario) throws Exception;
 
@@ -16,6 +16,8 @@ public interface UsuarioInterfaz {
 
 	boolean iniciarSesion(String correo, String contrasenia) throws Exception;
 
-	public void cambiarContrasenia(String correo, int codigo, String nuevaContrasenia) throws Exception;
+	public void cambiarContrasenia(String correo, String nuevaContrasenia) throws Exception;
+
+	public void verificarCodigo(String correo, int codigo) throws Exception;
 
 }

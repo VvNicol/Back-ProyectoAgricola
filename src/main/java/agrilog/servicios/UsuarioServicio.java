@@ -23,49 +23,8 @@ public class UsuarioServicio implements UsuarioInterfaz {
 	@Autowired
 	private CorreoServicio correoServicio;
 
-	@Override
-	public void cambiarContrasenia(String correo, int codigo, String nuevaContrasenia) throws Exception {
+	
 
-		UsuarioModelo usuario = usuarioRepositorio.findByCorreo(correo);
-
-		if (usuario == null) {
-			throw new Exception("Usuario no encontrado.");
-		}
-
-		if (Integer.valueOf(usuario.getCodigoRecuperacion()).equals(Integer.valueOf(codigo))
-				&& usuario.getCodigoExpiracionFecha().isAfter(LocalDateTime.now())) {
-			
-			String contraseniaEncriptada = ContraseniaEncriptada.encode(nuevaContrasenia);
-			usuario.setContrasenia(contraseniaEncriptada);
-
-			usuario.setCodigoRecuperacion(0);
-			usuario.setCodigoExpiracionFecha(null);
-
-			usuarioRepositorio.save(usuario);
-
-		} else {
-			throw new Exception("El codigo es incorrecto o ha expirado.");
-		}
-
-	}
-
-	@Override
-	public void solicitarRecuperacion(String correo) throws Exception {
-
-		UsuarioModelo usuario = usuarioRepositorio.findByCorreo(correo);
-
-		if (usuario != null) {
-
-			int codigo = Util.generarCodigo();
-			usuario.setCodigoRecuperacion(codigo);
-			usuario.setCodigoExpiracionFecha(LocalDateTime.now().plusMinutes(10));
-			correoServicio.correoRecuperacionConCodigo(usuario.getCorreo(), codigo);
-			usuarioRepositorio.save(usuario);
-
-		} else {
-			throw new Exception("Usuario no encontrado");
-		}
-	}
 
 	@Override
 	public void registrarUsuario(UsuarioModelo usuario) throws Exception {
@@ -141,6 +100,59 @@ public class UsuarioServicio implements UsuarioInterfaz {
 		}
 
 		return true;
+	}
+
+	@Override
+	public void enviarCodigoAlCorreo(String correo) throws Exception {
+
+		UsuarioModelo usuario = usuarioRepositorio.findByCorreo(correo);
+
+		if (usuario != null) {
+
+			int codigo = Util.generarCodigo();
+			usuario.setCodigoRecuperacion(codigo);
+			usuario.setCodigoExpiracionFecha(LocalDateTime.now().plusMinutes(10));
+			correoServicio.correoRecuperacionConCodigo(usuario.getCorreo(), codigo);
+			usuarioRepositorio.save(usuario);
+
+		} else {
+			throw new Exception("Usuario no encontrado");
+		}
+	}
+	
+	@Override
+	public void verificarCodigo(String correo, int codigo) throws Exception {
+		
+		UsuarioModelo usuario = usuarioRepositorio.findByCorreo(correo);
+		
+		if (Integer.valueOf(usuario.getCodigoRecuperacion()).equals(Integer.valueOf(codigo))
+				&& usuario.getCodigoExpiracionFecha().isAfter(LocalDateTime.now())) {
+			
+			usuario.setCodigoRecuperacion(0);
+			usuario.setCodigoExpiracionFecha(null);
+
+			usuarioRepositorio.save(usuario);
+
+		} else {
+			throw new Exception("El codigo es incorrecto o ha expirado.");
+		}
+		
+	}
+	
+	@Override
+	public void cambiarContrasenia(String correo, String nuevaContrasenia) throws Exception {
+
+		UsuarioModelo usuario = usuarioRepositorio.findByCorreo(correo);
+
+	    if (usuario == null) {
+	        throw new Exception("Usuario no encontrado.");
+	    }
+
+	    // Encriptar la nueva contraseña
+	    String contraseniaEncriptada = ContraseniaEncriptada.encode(nuevaContrasenia);
+	    usuario.setContrasenia(contraseniaEncriptada);
+
+	    usuarioRepositorio.save(usuario);
 	}
 
 }
