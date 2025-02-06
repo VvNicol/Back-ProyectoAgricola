@@ -116,7 +116,7 @@ public class UsuarioServicio implements UsuarioInterfaz {
 			usuarioRepositorio.save(usuario);
 
 		} else {
-			throw new Exception("Usuario no encontrado");
+			throw new Exception("Correo no encontrado");
 		}
 	}
 	

@@ -107,7 +107,7 @@ public class InicioControlador {
 			String correo = requestBody.get("correo");
 			ui.enviarCodigoAlCorreo(correo);
 
-			responde.put("mensaje", "Se ha enviado un codigo de recuperacion al correo.");
+			responde.put("mensaje", "Se ha enviado un codigo al correo.");
 
 			return new ResponseEntity<>(responde, HttpStatus.OK);
 
