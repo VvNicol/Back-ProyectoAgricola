@@ -52,14 +52,14 @@ public class InicioControlador {
 	}
 	
 	@PostMapping("/nueva-contrasenia")
-	public ResponseEntity<Map<String, String>> cambiarConstrasenia(@RequestBody Map<String, String> requestBody) {
+	public ResponseEntity<Map<String, String>> cambiarConstrasenia(@RequestBody Map<String, String> respuestaBody) {
 		
 		Map<String, String> responde = new HashMap<>();
 		
 		try {
-			String correo = requestBody.get("correo");
+			String correo = respuestaBody.get("correo");
 		
-			String nuevaContrasenia = requestBody.get("nuevaContrasenia");
+			String nuevaContrasenia = respuestaBody.get("nuevaContrasenia");
 			
 			ui.cambiarContrasenia(correo,nuevaContrasenia);
 			
@@ -76,14 +76,14 @@ public class InicioControlador {
 	}
 	
 	@PostMapping("/verificar-codigo")
-	public ResponseEntity<Map<String, String>> verificarCodigo(@RequestBody Map<String, String> requestBody) {
+	public ResponseEntity<Map<String, String>> verificarCodigo(@RequestBody Map<String, String> respuestaBody) {
 		
 		Map<String, String> responde = new HashMap<>();
 
 		try {
 			
-			String correo = requestBody.get("correo");
-			int codigo = Integer.parseInt(requestBody.get("codigo"));
+			String correo = respuestaBody.get("correo");
+			int codigo = Integer.parseInt(respuestaBody.get("codigo"));
 			ui.verificarCodigo(correo, codigo);
 
 			responde.put("mensaje", "Se ha verificado con exito el codigo.");
@@ -99,12 +99,12 @@ public class InicioControlador {
 	}
 
 	@PostMapping("/enviar-codigo")
-	public ResponseEntity<Map<String, String>> recuperarContrasenia(@RequestBody Map<String, String> requestBody) {
+	public ResponseEntity<Map<String, String>> recuperarContrasenia(@RequestBody Map<String, String> respuestaBody) {
 		Map<String, String> responde = new HashMap<>();
 
 		try {
 			
-			String correo = requestBody.get("correo");
+			String correo = respuestaBody.get("correo");
 			ui.enviarCodigoAlCorreo(correo);
 
 			responde.put("mensaje", "Se ha enviado un codigo al correo.");
@@ -151,7 +151,6 @@ public class InicioControlador {
 
 				String urlRedireccion = "http://localhost:4200/inicio/" + rol + "?token=" + token;
 
-				// respuesta JSON
 				responde.put("mensaje", "Inicio de sesión exitoso.");
 				responde.put("token", token);
 				responde.put("url", urlRedireccion);
