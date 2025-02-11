@@ -1,5 +1,6 @@
 package agrilog.configuracion;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -10,13 +11,14 @@ import agrilog.seguridad.JwtInterceptor;
 @Configuration
 public class WebConfiguracion implements WebMvcConfigurer {
 
+	@Autowired
 	private final JwtInterceptor jwtInterceptor;
 	
 	public WebConfiguracion(JwtInterceptor jwtInterceptor) {
 		this.jwtInterceptor = jwtInterceptor;
 	}
 	
-	public void agregarInterceptor(InterceptorRegistry registro) {
+	public void addInterceptors(InterceptorRegistry registro) {
 		registro.addInterceptor(jwtInterceptor)
 			.addPathPatterns("/**")
 			.excludePathPatterns(

@@ -30,11 +30,14 @@ public class CultivoModelo {
 	@Column(nullable = false, length = 100)
 	private String nombre; // Nombre del cultivo
 
+	@Column(name = "cantidad")
+	private int cantidad = 0;
+
 	@Column(nullable = true, length = 255)
 	private String descripcion; // Descripción del cultivo
 
-	@Column(name = "fecha_vencimiento", nullable = false)
-	private LocalDate fechaVencimiento; // Fecha de vencimiento del cultivo
+	@Column(name = "fecha_siembra", nullable = false)
+	private LocalDate fechaSiembra; // Fecha de siembra del cultivo
 
 	@Column(name = "fecha_registro", nullable = false)
 	private LocalDateTime fechaRegistro; // Fecha de registro del cultivo
@@ -54,11 +57,11 @@ public class CultivoModelo {
 		this.parcelaId.setParcelaId(parcelaId); // Asignar el ID de la parcela
 		this.nombre = nombre;
 		this.descripcion = descripcion;
-		this.fechaVencimiento = fechaVencimiento;
+		this.fechaSiembra = fechaVencimiento;
 		this.fechaRegistro = fechaRegistro;
 	}
-	
-	//Getters y Setters
+
+	// Getters y Setters
 
 	/**
 	 * @return the cultivoId
@@ -119,15 +122,15 @@ public class CultivoModelo {
 	/**
 	 * @return the fechaVencimiento
 	 */
-	public LocalDate getFechaVencimiento() {
-		return fechaVencimiento;
+	public LocalDate getFechaSiembra() {
+		return fechaSiembra;
 	}
 
 	/**
 	 * @param fechaVencimiento the fechaVencimiento to set
 	 */
-	public void setFechaVencimiento(LocalDate fechaVencimiento) {
-		this.fechaVencimiento = fechaVencimiento;
+	public void setFechaSiembra(LocalDate fechaVencimiento) {
+		this.fechaSiembra = fechaVencimiento;
 	}
 
 	/**
@@ -142,6 +145,34 @@ public class CultivoModelo {
 	 */
 	public void setFechaRegistro(LocalDateTime fechaRegistro) {
 		this.fechaRegistro = fechaRegistro;
+	}
+
+	/**
+	 * @return the cantidad
+	 */
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	/**
+	 * @param cantidad the cantidad to set
+	 */
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
+	/**
+	 * @return the notificaciones
+	 */
+	public List<NotificacionModelo> getNotificaciones() {
+		return notificaciones;
+	}
+
+	/**
+	 * @param notificaciones the notificaciones to set
+	 */
+	public void setNotificaciones(List<NotificacionModelo> notificaciones) {
+		this.notificaciones = notificaciones;
 	}
 
 }

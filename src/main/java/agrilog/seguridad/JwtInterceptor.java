@@ -3,52 +3,53 @@ package agrilog.seguridad;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import agrilog.excepciones.TokenInvalidoExcepcion;
+import agrilog.excepciones.TokenNoProporcionadoExcepcion;
 import agrilog.utilidades.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class JwtInterceptor implements HandlerInterceptor {
-    
-    private static final ThreadLocal<String> correoUsuario = new ThreadLocal<>();
-    private static final ThreadLocal<String> rolUsuario = new ThreadLocal<>();
 
-    @Override
-    public boolean preHandle(HttpServletRequest peticion, HttpServletResponse respuesta, Object handler) throws Exception {
-        
-        String token = peticion.getHeader("Authorization");
-        
-        if (token == null || !token.startsWith("Bearer ")) {
-            respuesta.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token no proporcionado");
-            return false;
-        }
+	private static final ThreadLocal<String> correoUsuario = new ThreadLocal<>();
+	private static final ThreadLocal<String> rolUsuario = new ThreadLocal<>();
 
-        token = token.substring(7);
+	@Override
+	public boolean preHandle(HttpServletRequest peticion, HttpServletResponse respuesta, Object handler)
+			throws Exception {
 
-        if (JwtUtil.validarToken(token)) {
-            String correo = JwtUtil.obtenerCorreDesdeToken(token);
-            String rol = JwtUtil.obtenerRolDesdeToken(token);
-            
-            correoUsuario.set(correo);
-            rolUsuario.set(rol);
-            
-            return true;
-        } else {
-            respuesta.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token inválido o expirado");
-            return false;
-        }
-    }
+		String token = peticion.getHeader("Authorization");
 
-    public static String obtenerCorreoUsuario() {
-        return correoUsuario.get();
-    }
+		if (token == null || !token.startsWith("Bearer ")) {
+			throw new TokenNoProporcionadoExcepcion("Token no proporcionado");
+		}
 
-    public static String obtenerRolUsuario() {
-        return rolUsuario.get();
-    }
+		token = token.substring(7);
 
-    public static void limpiar() {
-        correoUsuario.remove();
-        rolUsuario.remove();
-    }
+		if (JwtUtil.validarToken(token)) {
+			String correo = JwtUtil.obtenerCorreoDesdeToken(token);
+			String rol = JwtUtil.obtenerRolDesdeToken(token);
+
+			correoUsuario.set(correo);
+			rolUsuario.set(rol);
+
+			return true;
+		} else {
+			throw new TokenInvalidoExcepcion("Token invalido o expirado");
+		}
+	}
+
+	public static String obtenerCorreoUsuario() {
+		return correoUsuario.get();
+	}
+
+	public static String obtenerRolUsuario() {
+		return rolUsuario.get();
+	}
+
+	public static void limpiar() {
+		correoUsuario.remove();
+		rolUsuario.remove();
+	}
 }

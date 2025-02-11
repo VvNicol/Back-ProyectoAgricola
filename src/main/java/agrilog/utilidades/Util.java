@@ -18,4 +18,6 @@ public class Util {
 	public static int generarCodigo() {
 		return 100000 + new Random().nextInt(900000);
 	}
+	
+	
 }

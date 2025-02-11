@@ -51,7 +51,7 @@ public class JwtUtil {
 		
 	}
 	
-	public static  String obtenerCorreDesdeToken(String token) {
+	public static  String obtenerCorreoDesdeToken(String token) {
 		
 		Claims claims = Jwts.parser()
 							.verifyWith(clave)
