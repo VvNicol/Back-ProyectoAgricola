@@ -9,4 +9,5 @@ public interface CorreoInterfaz {
 	public void correoDeVerificacion(String correo, String token);
 
 	public void enviarCorreo(String para, String asunto, String contenidoHtml) throws MessagingException;
+
 }

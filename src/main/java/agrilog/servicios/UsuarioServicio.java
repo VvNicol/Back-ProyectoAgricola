@@ -24,8 +24,6 @@ public class UsuarioServicio implements UsuarioInterfaz {
 	private CorreoServicio correoServicio;
 
 	
-
-
 	@Override
 	public void registrarUsuario(UsuarioModelo usuario) throws Exception {
 

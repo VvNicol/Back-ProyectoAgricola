@@ -31,7 +31,7 @@ public class CultivoModelo {
 	private String nombre; // Nombre del cultivo
 
 	@Column(name = "cantidad")
-	private int cantidad = 0;
+	private Integer cantidad = 0;
 
 	@Column(nullable = true, length = 255)
 	private String descripcion; // Descripción del cultivo
@@ -57,9 +57,10 @@ public class CultivoModelo {
 		this.parcelaId.setParcelaId(parcelaId); // Asignar el ID de la parcela
 		this.nombre = nombre;
 		this.descripcion = descripcion;
-		this.fechaSiembra = fechaVencimiento;
+		this.fechaSiembra = fechaVencimiento; // Aquí debería ser fechaSiembra, no fechaVencimiento
 		this.fechaRegistro = fechaRegistro;
-	}
+}
+
 
 	// Getters y Setters
 
@@ -148,20 +149,6 @@ public class CultivoModelo {
 	}
 
 	/**
-	 * @return the cantidad
-	 */
-	public int getCantidad() {
-		return cantidad;
-	}
-
-	/**
-	 * @param cantidad the cantidad to set
-	 */
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
-	}
-
-	/**
 	 * @return the notificaciones
 	 */
 	public List<NotificacionModelo> getNotificaciones() {
@@ -173,6 +160,20 @@ public class CultivoModelo {
 	 */
 	public void setNotificaciones(List<NotificacionModelo> notificaciones) {
 		this.notificaciones = notificaciones;
+	}
+
+	/**
+	 * @return the cantidad
+	 */
+	public Integer getCantidad() {
+		return cantidad;
+	}
+
+	/**
+	 * @param cantidad the cantidad to set
+	 */
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
 	}
 
 }
