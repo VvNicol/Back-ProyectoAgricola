@@ -88,17 +88,19 @@ public class UsuarioControlador {
 	}
 	
 	@PreAuthorize("hasRole('usuario')")
-	@PostMapping("/cultivos")
-	public ResponseEntity<Map<String, List<CultivoModelo>>> obtenerCultivosPorUsuario() {
-	    try {
+    @PostMapping("/cultivos-ver")
+    public ResponseEntity<List<CultivoModelo>> listarCultivosPorParcela(@RequestBody Map<String, Long> data) {
+        try {
+            
 	        String correoUsuario = JwtInterceptor.obtenerCorreoUsuario();
-	        Map<String, List<CultivoModelo>> cultivosMap = cultivoServicio.obtenerCultivosPorUsuario(correoUsuario);
-	        return new ResponseEntity<>(cultivosMap, HttpStatus.OK);
-	    } catch (Exception e) {
-	        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-	    }
-	}
+        
+            List<CultivoModelo> cultivos = cultivoServicio.obtenerCultivosPorUsuario(correoUsuario);
 
+            return ResponseEntity.ok(cultivos);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 
 	    
 	@PreAuthorize("hasRole('usuario')")

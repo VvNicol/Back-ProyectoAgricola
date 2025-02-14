@@ -12,4 +12,5 @@ public class SeguridadConfiguracion {
 	public PasswordEncoder contraseniaEncriptada() {
 		return new BCryptPasswordEncoder();
 	}
+	
 }

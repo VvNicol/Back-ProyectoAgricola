@@ -11,6 +11,6 @@ public interface ParcelaRepositorio extends JpaRepository<ParcelaModelo, Long> {
 
 	ParcelaModelo findByNombreAndUsuarioId(String nombre, UsuarioModelo usuario);
 
-	List<ParcelaModelo> findByUsuario(UsuarioModelo usuario);
+	List<ParcelaModelo> findByUsuarioId(UsuarioModelo usuario);
 
 }

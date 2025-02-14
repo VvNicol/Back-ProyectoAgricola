@@ -1,6 +1,5 @@
 package agrilog.repositorios;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,6 +12,8 @@ public interface CultivoRepositorio extends JpaRepository<CultivoModelo, Long> {
 
 	Optional<CultivoModelo> findById(Long id);
 
-	 List<CultivoModelo> findByParcelaId(Long parcelaId);
+	/*@Query("SELECT c FROM CultivoModelo c WHERE c.parcelaId.usuarioId = :usuarioId")
+    List<CultivoModelo> findAllByUsuarioId(UsuarioModelo usuarioId);;*/
+
 
 }
