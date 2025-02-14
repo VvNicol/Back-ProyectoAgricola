@@ -128,18 +128,16 @@ public class CultivoServicio implements CultivoInterfaz {
 		cultivoRepositorio.delete(cultivo);
 	}
 
-	public List<CultivoModelo> obtenerCultivosPorUsuario(String correoUsuario) {
-		if (correoUsuario == null) {
+	public List<CultivoModelo> obtenerCultivosPorUsuario(String correoUsuario) throws Exception {
+	    if (correoUsuario == null) {
 	        throw new IllegalArgumentException("Usuario no autenticado");
 	    }
-
 	    UsuarioModelo usuario = usuarioRepositorio.findByCorreo(correoUsuario);
 	    if (usuario == null) {
 	        throw new IllegalArgumentException("Usuario no encontrado");
 	    }
-
-	    // Directo con la query
-	    return null;
+	    return cultivoRepositorio.findAllByUsuarioId(usuario.getUsuarioId());
 	}
+
 
 }

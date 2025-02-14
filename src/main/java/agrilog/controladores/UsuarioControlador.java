@@ -66,43 +66,47 @@ public class UsuarioControlador {
 
 		}
 	}
-	
+
 	@PreAuthorize("hasRole('usuario')")
 	@DeleteMapping("/cultivo-eliminar")
 	public ResponseEntity<Map<String, String>> cultivoEliminar(@RequestBody Map<String, Long> datos) {
-	    Map<String, String> respuesta = new HashMap<>();
-	    
+		Map<String, String> respuesta = new HashMap<>();
+
+		try {
+			String correoUsuario = JwtInterceptor.obtenerCorreoUsuario();
+			Long cultivoId = datos.get("cultivoId");
+
+			cultivoServicio.cultivoEliminar(cultivoId, correoUsuario);
+
+			respuesta.put("mensaje", "Cultivo eliminado con éxito");
+			return new ResponseEntity<>(respuesta, HttpStatus.OK);
+
+		} catch (Exception e) {
+			respuesta.put("error", e.getMessage());
+			return new ResponseEntity<>(respuesta, HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@PreAuthorize("hasRole('usuario')")
+	@PostMapping("/cultivos-ver")
+	public ResponseEntity<Map<String, List<CultivoModelo>>> listarCultivosPorParcela() {
 	    try {
 	        String correoUsuario = JwtInterceptor.obtenerCorreoUsuario();
-	        Long cultivoId = datos.get("cultivoId");
+	        List<CultivoModelo> cultivos = cultivoServicio.obtenerCultivosPorUsuario(correoUsuario);
 	        
-	        cultivoServicio.cultivoEliminar(cultivoId, correoUsuario);
-
-	        respuesta.put("mensaje", "Cultivo eliminado con éxito");
-	        return new ResponseEntity<>(respuesta, HttpStatus.OK);
+	        Map<String, List<CultivoModelo>> respuesta = new HashMap<>();
+	        respuesta.put("cultivos", cultivos);
 	        
+	        return ResponseEntity.ok(respuesta);
 	    } catch (Exception e) {
-	        respuesta.put("error", e.getMessage());
-	        return new ResponseEntity<>(respuesta, HttpStatus.BAD_REQUEST);
+	        Map<String, List<CultivoModelo>> errorMap = new HashMap<>();
+	        errorMap.put("cultivos error", List.of());
+	        return ResponseEntity.badRequest().body(errorMap);
 	    }
 	}
-	
-	@PreAuthorize("hasRole('usuario')")
-    @PostMapping("/cultivos-ver")
-    public ResponseEntity<List<CultivoModelo>> listarCultivosPorParcela(@RequestBody Map<String, Long> data) {
-        try {
-            
-	        String correoUsuario = JwtInterceptor.obtenerCorreoUsuario();
-        
-            List<CultivoModelo> cultivos = cultivoServicio.obtenerCultivosPorUsuario(correoUsuario);
 
-            return ResponseEntity.ok(cultivos);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
+ 
 
-	    
 	@PreAuthorize("hasRole('usuario')")
 	@PostMapping("/notificacion")
 	public ResponseEntity<Map<String, String>> notificaciones(@RequestBody Map<String, Object> data) {

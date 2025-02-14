@@ -5,69 +5,74 @@ import java.time.LocalDateTime;
 
 public class CultivoDto {
 
-	private Long cultivo_id;
-
-	private Long parcela_id;
-
-	private String nombre;
-
+	private Long cultivoId;
+	private String nombreCultivo;
+	private Integer cantidad;
 	private String descripcion;
+	private LocalDate fechaSiembra;
+	private LocalDateTime fechaRegistro;
+	private String nombreParcela;
 
-	private LocalDate fecha_vencimiento;
-
-	private LocalDateTime fecha_registro;
-
+	
+	
 	/**
-	 * Constructores
+	 * 
 	 */
 	public CultivoDto() {
+		super();
+	}
 
+	public CultivoDto(Long cultivoId, String nombreCultivo, Integer cantidad, String descripcion, 
+                      LocalDate fechaSiembra, LocalDateTime fechaRegistro, String nombreParcela) {
+        this.cultivoId = cultivoId;
+        this.nombreCultivo = nombreCultivo;
+        this.cantidad = cantidad;
+        this.descripcion = descripcion;
+        this.fechaSiembra = fechaSiembra;
+        this.fechaRegistro = fechaRegistro;
+        this.nombreParcela = nombreParcela;
+    }
+
+	/**
+	 * @return the cultivoId
+	 */
+	public Long getCultivoId() {
+		return cultivoId;
 	}
 
 	/**
-	 * Getters y Setters
+	 * @param cultivoId the cultivoId to set
 	 */
-
-	/**
-	 * @return the cultivo_id
-	 */
-	public Long getCultivo_id() {
-		return cultivo_id;
+	public void setCultivoId(Long cultivoId) {
+		this.cultivoId = cultivoId;
 	}
 
 	/**
-	 * @param cultivo_id the cultivo_id to set
+	 * @return the nombreCultivo
 	 */
-	public void setCultivo_id(Long cultivo_id) {
-		this.cultivo_id = cultivo_id;
+	public String getNombreCultivo() {
+		return nombreCultivo;
 	}
 
 	/**
-	 * @return the parcela_id
+	 * @param nombreCultivo the nombreCultivo to set
 	 */
-	public Long getParcela_id() {
-		return parcela_id;
+	public void setNombreCultivo(String nombreCultivo) {
+		this.nombreCultivo = nombreCultivo;
 	}
 
 	/**
-	 * @param parcela_id the parcela_id to set
+	 * @return the cantidad
 	 */
-	public void setParcela_id(Long parcela_id) {
-		this.parcela_id = parcela_id;
+	public Integer getCantidad() {
+		return cantidad;
 	}
 
 	/**
-	 * @return the nombre
+	 * @param cantidad the cantidad to set
 	 */
-	public String getNombre() {
-		return nombre;
-	}
-
-	/**
-	 * @param nombre the nombre to set
-	 */
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
 	}
 
 	/**
@@ -85,31 +90,45 @@ public class CultivoDto {
 	}
 
 	/**
-	 * @return the fecha_vencimiento
+	 * @return the fechaSiembra
 	 */
-	public LocalDate getFecha_vencimiento() {
-		return fecha_vencimiento;
+	public LocalDate getFechaSiembra() {
+		return fechaSiembra;
 	}
 
 	/**
-	 * @param fecha_vencimiento the fecha_vencimiento to set
+	 * @param fechaSiembra the fechaSiembra to set
 	 */
-	public void setFecha_vencimiento(LocalDate fecha_vencimiento) {
-		this.fecha_vencimiento = fecha_vencimiento;
+	public void setFechaSiembra(LocalDate fechaSiembra) {
+		this.fechaSiembra = fechaSiembra;
 	}
 
 	/**
-	 * @return the fecha_registro
+	 * @return the fechaRegistro
 	 */
-	public LocalDateTime getFecha_registro() {
-		return fecha_registro;
+	public LocalDateTime getFechaRegistro() {
+		return fechaRegistro;
 	}
 
 	/**
-	 * @param fecha_registro the fecha_registro to set
+	 * @param fechaRegistro the fechaRegistro to set
 	 */
-	public void setFecha_registro(LocalDateTime fecha_registro) {
-		this.fecha_registro = fecha_registro;
+	public void setFechaRegistro(LocalDateTime fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
+	}
+
+	/**
+	 * @return the nombreParcela
+	 */
+	public String getNombreParcela() {
+		return nombreParcela;
+	}
+
+	/**
+	 * @param nombreParcela the nombreParcela to set
+	 */
+	public void setNombreParcela(String nombreParcela) {
+		this.nombreParcela = nombreParcela;
 	}
 
 }
