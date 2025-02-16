@@ -13,8 +13,6 @@ public class CultivoDto {
 	private LocalDateTime fechaRegistro;
 	private String nombreParcela;
 
-	
-	
 	/**
 	 * 
 	 */
@@ -22,16 +20,16 @@ public class CultivoDto {
 		super();
 	}
 
-	public CultivoDto(Long cultivoId, String nombreCultivo, Integer cantidad, String descripcion, 
-                      LocalDate fechaSiembra, LocalDateTime fechaRegistro, String nombreParcela) {
-        this.cultivoId = cultivoId;
-        this.nombreCultivo = nombreCultivo;
-        this.cantidad = cantidad;
-        this.descripcion = descripcion;
-        this.fechaSiembra = fechaSiembra;
-        this.fechaRegistro = fechaRegistro;
-        this.nombreParcela = nombreParcela;
-    }
+	public CultivoDto(Long cultivoId, String nombreCultivo, Integer cantidad, String descripcion,
+			LocalDate fechaSiembra, LocalDateTime fechaRegistro, String nombreParcela) {
+		this.cultivoId = cultivoId;
+		this.nombreCultivo = nombreCultivo;
+		this.cantidad = cantidad;
+		this.descripcion = descripcion;
+		this.fechaSiembra = fechaSiembra;
+		this.fechaRegistro = fechaRegistro;
+		this.nombreParcela = nombreParcela;
+	}
 
 	/**
 	 * @return the cultivoId

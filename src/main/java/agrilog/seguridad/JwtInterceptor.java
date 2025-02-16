@@ -19,6 +19,11 @@ public class JwtInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest peticion, HttpServletResponse respuesta, Object handler)
 			throws Exception {
 
+		if ("OPTIONS".equalsIgnoreCase(peticion.getMethod())) {
+	        return true;
+	    }
+	    
+		
 		String token = peticion.getHeader("Authorization");
 
 		if (token == null || !token.startsWith("Bearer ")) {

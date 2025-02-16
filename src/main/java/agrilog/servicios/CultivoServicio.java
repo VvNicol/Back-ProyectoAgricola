@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import agrilog.dto.CultivoDto;
 import agrilog.modelos.CultivoModelo;
 import agrilog.modelos.ParcelaModelo;
 import agrilog.modelos.UsuarioModelo;
@@ -128,7 +129,7 @@ public class CultivoServicio implements CultivoInterfaz {
 		cultivoRepositorio.delete(cultivo);
 	}
 
-	public List<CultivoModelo> obtenerCultivosPorUsuario(String correoUsuario) throws Exception {
+	public List<CultivoDto> obtenerCultivosDtoPorUsuario(String correoUsuario) throws Exception {
 	    if (correoUsuario == null) {
 	        throw new IllegalArgumentException("Usuario no autenticado");
 	    }
@@ -136,7 +137,8 @@ public class CultivoServicio implements CultivoInterfaz {
 	    if (usuario == null) {
 	        throw new IllegalArgumentException("Usuario no encontrado");
 	    }
-	    return cultivoRepositorio.findAllByUsuarioId(usuario.getUsuarioId());
+	    
+	    return cultivoRepositorio.findAllDtoByUsuario(usuario);
 	}
 
 
